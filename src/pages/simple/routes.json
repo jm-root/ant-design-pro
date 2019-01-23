@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/simple",
+    "name": "simple",
+    "icon": "form",
+    "routes": [
+      {
+        "path": "/simple/list",
+        "component": "./simple/list",
+        "name": "list"
+      }
+    ]
+  }
+]
