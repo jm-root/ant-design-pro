@@ -4,6 +4,8 @@
 
 实际工作中，我们经常把后台的功能被划分为各个独立的模块，根据需要选择使用，这些模块也会被分配给不同的开发人员负责开发和维护。
 
+我们希望把路由配置放在每个模块，启动时被动态加载。
+
 jm-ant-design-pro 基于 [ant design pro](https://pro.ant.design/) 实现这一功能。
 
 设计原则上尽量减少对于 ant design pro 的修改，这里说明主要的差异，方便跟随官方版本升级。
@@ -122,6 +124,7 @@ src/pages/Dashboard/
 +      doc = doc.sort((a, b) => a.order - b.order);
 +      const menuData = doc;
 ```
+
 
 ### src/pages/simple
 
