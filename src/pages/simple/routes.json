@@ -3,6 +3,7 @@
     "path": "/simple",
     "name": "simple",
     "icon": "form",
+    "order": 100,
     "routes": [
       {
         "path": "/simple/list",

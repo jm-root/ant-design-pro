@@ -36,6 +36,7 @@ function formatter(data, parentAuthority, parentName) {
         // Reduce memory usage
         result.children = children;
       }
+      if (!result.order) result.order = 0;
       delete result.routes;
       return result;
     })
@@ -103,7 +104,9 @@ export default {
   effects: {
     *getMenuData({ payload }, { put }) {
       const { routes, authority } = payload;
-      const menuData = filterMenuData(memoizeOneFormatter(routes, authority));
+      let doc = filterMenuData(memoizeOneFormatter(routes, authority));
+      doc = doc.sort((a, b) => a.order - b.order);
+      const menuData = doc;
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
       yield put({
         type: 'save',

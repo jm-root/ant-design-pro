@@ -1,8 +1,19 @@
 # jm-ant-design-pro
 
-实际工作中，我们经常把后台的功能被划分为各个独立的模块，根据需要组合使用，jm-ant-design-pro 基于 [ant design pro](https://pro.ant.design/) 实现这一功能。
+大家知道，Ant Design Pro 通过 config/router.config.js 配置路由。
+
+实际工作中，我们经常把后台的功能被划分为各个独立的模块，根据需要选择使用，这些模块也会被分配给不同的开发人员负责开发和维护。
+
+jm-ant-design-pro 基于 [ant design pro](https://pro.ant.design/) 实现这一功能。
 
 设计原则上尽量减少对于 ant design pro 的修改，这里说明主要的差异，方便跟随官方版本升级。
+
+## Features
+
+- 动态路由
+- 动态左侧菜单, 可以配置菜单顺序
+- 支持国际化
+- 支持mock
 
 ## 概念
 
@@ -12,7 +23,7 @@
 
 ### 工具类 Loader
 
-定义在 config/router.config.js 中，帮助 ant design pro 编译时自动识别和加载应用。
+定义在 config/router.loader.js 中，帮助 ant design pro 编译时自动识别和加载应用。
 
 ## 应用 app 约定
 
@@ -77,21 +88,39 @@ src/pages/Dashboard/
   "devDependencies": {
 +    "fs-extra": "^7.0.0",  
 ```
-  
+
+### config/router.loader.js
+
+新增文件, 增加类 Loader, 实现动态加载 src/pages 文件夹下符合约定的应用 app
+
 ### config/router.config.js
 
-增加类 Loader, 实现动态加载 src/pages 文件夹下符合约定的应用 app
+调用 Loader, 合并应用中定义的路由。
 
 ```
-+const fs = require('fs');
++import routes from './router.loader';
 ... 
 
-+class Loader { ... }
-
-+const loader = new Loader();
-
     routes: [
-+      ...loader.routes,
++      ...routes,
+```
+
+### src/models/menu.js
+
+实现左侧菜单自定义排序。
+
+默认菜单顺序为 0。
+
+```
++     if (!result.order) result.order = 0;
+      delete result.routes;
+      return result;
+}
+...
+-      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData); 
++      let doc = filterMenuData(memoizeOneFormatter(routes, authority));
++      doc = doc.sort((a, b) => a.order - b.order);
++      const menuData = doc;
 ```
 
 ### src/pages/simple
