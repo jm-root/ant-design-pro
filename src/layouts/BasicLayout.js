@@ -75,15 +75,6 @@ class BasicLayout extends React.Component {
     });
   }
 
-  componentDidUpdate(preProps) {
-    // After changing to phone mode,
-    // if collapsed is true, you need to click twice to display
-    const { collapsed, isMobile } = this.props;
-    if (isMobile && !preProps.isMobile && !collapsed) {
-      this.handleMenuCollapse(false);
-    }
-  }
-
   getContext() {
     const { location, breadcrumbNameMap } = this.props;
     return {
@@ -97,20 +88,27 @@ class BasicLayout extends React.Component {
     return breadcrumbNameMap[pathKey];
   };
 
-  getRouterAuthority = (pathname, routeData) => {
-    let routeAuthority = ['noAuthority'];
-    const getAuthority = (key, routes) => {
-      routes.forEach(route => {
-        if (route.path && pathToRegexp(route.path).test(key)) {
-          routeAuthority = route.authority;
-        } else if (route.routes) {
-          routeAuthority = getAuthority(key, route.routes);
+  getRouteAuthority = (pathname, routeData) => {
+    const routes = routeData.slice(); // clone
+
+    const getAuthority = (routeDatas, path) => {
+      let authorities;
+      routeDatas.forEach(route => {
+        // check partial route
+        if (pathToRegexp(`${route.path}(.*)`).test(path)) {
+          if (route.authority) {
+            authorities = route.authority;
+          }
+          // is exact route?
+          if (!pathToRegexp(route.path).test(path) && route.routes) {
+            authorities = getAuthority(route.routes, path);
+          }
         }
-        return route;
       });
-      return routeAuthority;
+      return authorities;
     };
-    return getAuthority(pathname, routeData);
+
+    return getAuthority(routes, pathname);
   };
 
   getPageTitle = (pathname, breadcrumbNameMap) => {
@@ -170,7 +168,7 @@ class BasicLayout extends React.Component {
     } = this.props;
 
     const isTop = PropsLayout === 'topmenu';
-    const routerConfig = this.getRouterAuthority(pathname, routes);
+    const routerConfig = this.getRouteAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
     const layout = (
       <Layout>

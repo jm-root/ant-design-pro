@@ -151,6 +151,12 @@ export default [
             component: './Profile/BasicProfile',
           },
           {
+            path: '/profile/basic/:id',
+            name: 'basic',
+            hideInMenu: true,
+            component: './Profile/BasicProfile',
+          },
+          {
             path: '/profile/advanced',
             name: 'advanced',
             authority: ['admin'],
