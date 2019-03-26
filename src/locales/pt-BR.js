@@ -10,6 +10,7 @@ import settingDrawer from './pt-BR/settingDrawer';
 import settings from './pt-BR/settings';
 import pwa from './pt-BR/pwa';
 import component from './pt-BR/component';
+import editor from './pt-BR/editor';
 
 export default {
   'navBar.lang': 'Idiomas',
@@ -20,6 +21,8 @@ export default {
   'app.forms.basic.title': 'Basic form',
   'app.forms.basic.description':
     'Páginas de formulário são usadas para coletar e verificar as informações dos usuários e formulários básicos são comuns nos cenários onde existem alguns formatos de informações.',
+  'menu.simple': 'Simples',
+  'menu.simple.list': 'Lista simples',
   ...analysis,
   ...exception,
   ...form,
@@ -32,4 +35,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  ...editor,
 };

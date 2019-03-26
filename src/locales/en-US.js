@@ -10,6 +10,7 @@ import settingDrawer from './en-US/settingDrawer';
 import settings from './en-US/settings';
 import pwa from './en-US/pwa';
 import component from './en-US/component';
+import editor from './en-US/editor';
 
 export default {
   'navBar.lang': 'Languages',
@@ -20,6 +21,8 @@ export default {
   'app.forms.basic.title': 'Basic form',
   'app.forms.basic.description':
     'Form pages are used to collect or verify information to users, and basic forms are common in scenarios where there are fewer data items.',
+  'menu.simple': 'Simple',
+  'menu.simple.list': 'Simple List',
   ...analysis,
   ...exception,
   ...form,
@@ -32,4 +35,5 @@ export default {
   ...settings,
   ...pwa,
   ...component,
+  ...editor,
 };
