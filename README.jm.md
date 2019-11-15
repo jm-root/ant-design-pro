@@ -29,7 +29,7 @@ jm-ant-design-pro 基于 [ant design pro](https://pro.ant.design/) 实现这一�
 
 ## 应用 app 约定
 
-主要增加了 routes.json、 locales (可选)、mock（可选），其他部分遵循原写法，不变。
+主要增加了 routes.json 其他部分遵循原写法，不变。
 
 下面的例子定义了一个应用 simple。
 
@@ -40,10 +40,9 @@ src/pages/simple/
   list.js      // 路由, 遵循原写法
   list.less    // less, 遵循原写法
   locales/      // 国际化文件, 遵循原写法
-    en-US.ts  // 格式: [语言].ts
+    en-US.ts    // 格式: [语言].ts
     zh-CN.ts
-  mock/         // mock 定义
-    simple.js   // 遵循原写法, 注意，文件名称全局唯一，这里的文件会被 Loader 复制到项目的根文件夹 mock 中
+  _mock.js      // mock 定义, 遵循原写法
   routes.json   // 路由定义，Loader 根据此文件识别应用并且加载
 
 ```
@@ -62,8 +61,7 @@ src/pages/Dashboard/
   locales/
     en-US.ts
     zh-CN.ts
-  mock/
-    Dashboard.js
+  _mock.js
   routes.json   // 应用路由定义，会被 Loaer 加载
 ```
 
@@ -73,7 +71,8 @@ src/pages/Dashboard/
 - 循环处理每个子目录
   1. 如果目录中存在 routes.json, 则识别为应用
   1. 合并 routes
-  1. 复制 mock
+  1. 复制 mock // deprecated 为了向下兼容
+  1. 处理 locales // deprecated 为了向下兼容
 - 进入 ant design pro 正常启动或者编译流程
 
 ## 与 ant design pro 的文件差异
