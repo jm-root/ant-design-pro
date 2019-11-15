@@ -1,5 +1,6 @@
 import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
+import routes from './router.loader';
 
 import slash from 'slash2';
 import webpackPlugin from './plugin.config';
@@ -120,6 +121,7 @@ export default {
             {
               component: './404',
             },
+            ...routes,
           ],
         },
         {
