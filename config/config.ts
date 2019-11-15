@@ -101,7 +101,6 @@ export default {
           component: '../layouts/BasicLayout',
           authority: ['admin', 'user'],
           routes: [
-            ...routes,
             {
               path: '/',
               redirect: '/welcome',
@@ -119,17 +118,11 @@ export default {
               component: './Admin',
               authority: ['admin'],
             },
-            {
-              component: './404',
-            },
+            ...routes,
           ],
-        },
-        {
-          component: './404',
         },
       ],
     },
-
     {
       component: './404',
     },
